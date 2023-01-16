@@ -2,15 +2,24 @@ require "json"
 require_relative "app/models/practitioner"
 require_relative "app/models/communication"
 require_relative "app/models/total"
+require_relative "app/controllers/communications_controller"
 
 # Lecture et parsing du fichier data.json
 data = File.read('data.json')
 parsed_data = JSON.parse(data)
 
 # Initialisation des instances de la classe Practitioner à partir des données contenues dans parsed_data
-parsed_data.each do |item|
-  puts @practitioner = Practitioner.new(item[:id], item['color'], item['sent_at'])
+parsed_data["practitioners"].each do |item|
+  @practitioner = Practitioner.new(item["id"], item['first_name'], item['last_name'], item['express_delivery'])
 end
+
+@communications = []
+parsed_data["communications"].each do |item|
+  @communication = Communication.new(item["id"], item['practitioner_id'], item['pages_number'], item['color'], item['sent_at'])
+  @communications << @communication
+end
+puts @communications
+
 
 @communications.each do |communication|
   @total.sent_on = communication.sent_at
