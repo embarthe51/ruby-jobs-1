@@ -1,8 +1,8 @@
 class Total
   attr_reader :sent_on, :total
 
-  def initialize(attributes ={})
-    @sent_on = attributes[:sent_on]
-    @total = attributes[:total]
+  def initialize(sent_on, total)
+    @sent_on = sent_on
+    @total = total
   end
 end
